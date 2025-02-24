@@ -1,0 +1,16 @@
+yield Field::new('filenameFile', 'crud.report_import.grid.column_label.filename_file')
+            ->setFormType(VichFileType::class)
+            ->setFormTypeOption('required', true)
+            ->setFormTypeOption('constraints', [])
+            ->setFormTypeOption('attr', [
+                'accept' => implode(',', [
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    '.xlsx'
+                ]),
+                'class' => 'form-control-file'
+            ])
+            ->setFormTypeOption('download_uri', false)
+            ->setFormTypeOption('allow_delete', true)
+            ->setFormTypeOption('delete_label', 'Remove file')
+            ->hideOnIndex()
+            ->hideOnDetail();

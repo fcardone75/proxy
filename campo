@@ -1,5 +1,5 @@
-        yield TextField::new('filename', 'Current File')
-            ->onlyOnForms()
-            ->setFormTypeOption('disabled', true)
-            ->hideOnIndex();
-https://artigianato-liguria.staging.echonet/reset-password/reset/yqgAXHGF6wNwbe5-DAVb3JjBMpLyFwMVBMau9aFNbB4
+  App\Monolog\Processor\CriticalErrorFormatter:
+    arguments:
+      $format: "[%%datetime%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
+      $dateFormat: null
+      $allowInlineLineBreaks: true

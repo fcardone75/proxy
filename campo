@@ -3,3 +3,10 @@
       $format: "[%%datetime%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
       $dateFormat: null
       $allowInlineLineBreaks: true
+
+
+ACCESS_TOKEN=$(curl -s -X POST "<URL>" -H "Content-Type: application/json" -d '{"parametri": "valori"}' \
+| grep -o '"access_token":"[^"]*"' \
+| sed 's/"access_token":"\([^"]*\)"/\1/')
+
+echo "Token: $ACCESS_TOKEN"

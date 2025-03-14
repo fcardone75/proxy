@@ -19,4 +19,8 @@ MY_ACCESS_TOKEN=$(curl -s -X POST "$IBM_CLOUD_ENDPOINT" \
   --data-urlencode "response_type=cloud_iam" \
   --data-urlencode "grant_type=urn:ibm:params:oauth:grant-type:apikey" \
   | grep -o '"access_token":"[^"]*"' \
-  | sed 's/"access_token":"\([^"]*\)"/\1/')
+  | sed 's/"access_token":"\([^"]*\)"/\1/'
+
+
+
+echo "$XML_DATA" | grep -oP '(?<=<Key>).*?(?=</Key>)'

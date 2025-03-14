@@ -1,0 +1,38 @@
+template/bundles/EasyAdminBundle/application/crud/detail.html.twig
+
+<dt>
+                                <a href="{{ path('financing-provisioning-download-signed-pdf', {
+                                    id: entity.instance.financingProvisioningCertification.id,
+                                    fileName: entity.instance.financingProvisioningCertification.filename|replace({'.pdf': ''})
+                                }) }}">
+                                    <i class="icon-fa-app fa fa-fw fa-file-o"></i> {{ entity.instance.financingProvisioningCertification.originalFileName }}<br>
+                                    ({{ entity.instance.financingProvisioningCertification.fileSize|size_units }} - {{ entity.instance.financingProvisioningCertification.fileUploadedAt|date("d/m/Y H:i:s") }})
+                                </a>
+                            </dt>
+
+
+<div class="box-body">
+
+<div class="box-body">
+                <div id="list-messages-container" class="direct-chat-messages">
+                    {% set sortedMessages = entity.instance.publishedMessages|sort((a, b) => a.updatedAt.timestamp <=> b.updatedAt.timestamp)|reverse %}
+                    {% for message in sortedMessages %}
+                        <div id="message_{{ message.id }}" class="direct-chat-msg {% if app.user == message.createdBy %}right{% else %}left{% endif %}">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name pull-{% if app.user == message.createdBy %}right{% else %}left{% endif %}">{{ message.createdBy ? message.createdBy.fullName : '' }}</span>
+                                <span class="direct-chat-timestamp pull-{% if app.user == message.createdBy %}right{% else %}left{% endif %}">{{ message.updatedAt|date('d/m/Y H:i') }}</span>
+                            </div>
+                            <img class="direct-chat-img" src="/images/chat_avatar_placeholder.png" alt="message user image">
+                            <div class="direct-chat-text">
+                                {% if message.text %}{{ message.text|raw }}{% endif %}
+                                {% for att in message.attachments %}
+                                    <a rel="noopener" target="_blank" href="{{ att.fileWebPath }}">
+                                        {{ att.originalFilename }}{{ ' ' }}
+                                    </a>
+                                    <br/>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>

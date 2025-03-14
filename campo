@@ -10,3 +10,13 @@ ACCESS_TOKEN=$(curl -s -X POST "<URL>" -H "Content-Type: application/json" -d '{
 | sed 's/"access_token":"\([^"]*\)"/\1/')
 
 echo "Token: $ACCESS_TOKEN"
+
+
+MY_ACCESS_TOKEN=$(curl -s -X POST "$IBM_CLOUD_ENDPOINT" \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  --data-urlencode "apikey=${IBM_CLOUD_API_KEY}" \
+  --data-urlencode "response_type=cloud_iam" \
+  --data-urlencode "grant_type=urn:ibm:params:oauth:grant-type:apikey" \
+  | grep -o '"access_token":"[^"]*"' \
+  | sed 's/"access_token":"\([^"]*\)"/\1/')

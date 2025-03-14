@@ -24,3 +24,6 @@ MY_ACCESS_TOKEN=$(curl -s -X POST "$IBM_CLOUD_ENDPOINT" \
 
 
 echo "$XML_DATA" | grep -oP '(?<=<Key>).*?(?=</Key>)'
+
+
+echo "$XML_DATA" | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'

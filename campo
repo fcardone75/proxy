@@ -27,3 +27,21 @@ echo "$XML_DATA" | grep -oP '(?<=<Key>).*?(?=</Key>)'
 
 
 echo "$XML_DATA" | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
+
+
+
+urlencode() {
+  local raw="$1"
+  local encoded=""
+  local i char
+
+  for (( i=0; i<${#raw}; i++ )); do
+    char="${raw:$i:1}"
+    case "$char" in
+      [a-zA-Z0-9.~_-]) encoded+="$char" ;;
+      *) printf -v encoded '%s%%%02X' "$encoded" "'$char" ;;
+    esac
+  done
+
+  echo "$encoded"
+}

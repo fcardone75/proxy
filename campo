@@ -28,7 +28,7 @@ echo "$XML_DATA" | grep -oP '(?<=<Key>).*?(?=</Key>)'
 
 echo "$XML_DATA" | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
 
-
+echo "$XML_DATA" | grep "<Key>" | sed 's:.*<Key>\(.*\)</Key>.*:\1:'
 
 urlencode() {
   local raw="$1"

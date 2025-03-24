@@ -30,6 +30,10 @@ echo "$XML_DATA" | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
 
 echo "$XML_DATA" | grep "<Key>" | sed 's:.*<Key>\(.*\)</Key>.*:\1:'
 
+echo "$XML_DATA" | sed 's/></>\n</g' | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
+
+
+
 urlencode() {
   local raw="$1"
   local encoded=""

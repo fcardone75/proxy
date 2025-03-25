@@ -49,3 +49,14 @@ urlencode() {
 
   echo "$encoded"
 }
+
+
+
+/**
+ * @ORM\Entity(repositoryClass=FinancingProvisioningCertificationRepository::class)
+ * @ORM\Table(indexes={
+ *     @ORM\Index(name="idx_fpc_application_deleted", columns={"application_id", "deleted_at"})
+ * })
+ * @Vich\Uploadable
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=true, hardDelete=false)
+ */

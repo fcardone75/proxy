@@ -1,62 +1,69 @@
-  App\Monolog\Processor\CriticalErrorFormatter:
-    arguments:
-      $format: "[%%datetime%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
-      $dateFormat: null
-      $allowInlineLineBreaks: true
-
-
-ACCESS_TOKEN=$(curl -s -X POST "<URL>" -H "Content-Type: application/json" -d '{"parametri": "valori"}' \
-| grep -o '"access_token":"[^"]*"' \
-| sed 's/"access_token":"\([^"]*\)"/\1/')
-
-echo "Token: $ACCESS_TOKEN"
-
-
-MY_ACCESS_TOKEN=$(curl -s -X POST "$IBM_CLOUD_ENDPOINT" \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/x-www-form-urlencoded' \
-  --data-urlencode "apikey=${IBM_CLOUD_API_KEY}" \
-  --data-urlencode "response_type=cloud_iam" \
-  --data-urlencode "grant_type=urn:ibm:params:oauth:grant-type:apikey" \
-  | grep -o '"access_token":"[^"]*"' \
-  | sed 's/"access_token":"\([^"]*\)"/\1/'
-
-
-
-echo "$XML_DATA" | grep -oP '(?<=<Key>).*?(?=</Key>)'
-
-
-echo "$XML_DATA" | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
-
-echo "$XML_DATA" | grep "<Key>" | sed 's:.*<Key>\(.*\)</Key>.*:\1:'
-
-echo "$XML_DATA" | sed 's/></>\n</g' | sed -n 's:.*<Key>\(.*\)</Key>.*:\1:p'
-
-
-
-urlencode() {
-  local raw="$1"
-  local encoded=""
-  local i char
-
-  for (( i=0; i<${#raw}; i++ )); do
-    char="${raw:$i:1}"
-    case "$char" in
-      [a-zA-Z0-9.~_-]) encoded+="$char" ;;
-      *) printf -v encoded '%s%%%02X' "$encoded" "'$char" ;;
-    esac
-  done
-
-  echo "$encoded"
-}
-
-
-
-/**
- * @ORM\Entity(repositoryClass=FinancingProvisioningCertificationRepository::class)
- * @ORM\Table(indexes={
- *     @ORM\Index(name="idx_fpc_application_deleted", columns={"application_id", "deleted_at"})
- * })
- * @Vich\Uploadable
- * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=true, hardDelete=false)
- */
+📆 Ripartizione per mese e attività associate
+ 
+🔹 Novembre (2gg)
+ 
+Attività:
+	•	Analisi iniziale delle architetture applicative di Artigianato Liguria e Cassa Liguria.
+	•	Studio dei manifest YAML per l’adattamento a K8s.
+	•	Prime configurazioni dei moduli develop e services per ambiente di test.
+ 
+ 
+🔹 Dicembre (10gg)
+ 
+Attività:
+	•	Sviluppo e deployment degli artefatti backend/frontend su Kubernetes.
+	•	Configurazione ConfigMap, Secrets, ingress e servizi.
+	•	Creazione dei moduli di configurazione per l’integrazione con il sistema IBM COS.
+	•	Preparazione e invio delle richieste EACB per l’apertura delle porte firewall (interna/esterna).
+	•	Testing dei pod e logging su K8s (con fix sui manifest k8s).
+ 
+ 
+🔹 Gennaio (10gg)
+ 
+Attività:
+	•	Implementazione CFT per lo scambio file in uscita/entrata verso ente terzo.
+	•	Caricamento dati su database PostgreSQL da dump parziale non coerente.
+	•	Creazione schema con Doctrine, rimozione FK, caricamento dati via CLI e successivo ripristino delle FK in modo programmato con script PHP.
+	•	Analisi impatto su dati mancanti, verifica consistenza e data recovery.
+ 
+ 
+🔹 Febbraio (20gg)
+ 
+Attività:
+	•	Troubleshooting avanzato su comunicazione tra app PHP e bucket S3 IBM.
+	•	Debug connessione SDK PHP, gestione ACL e permessi IAM.
+	•	develop e Setup script automatici per il caricamento dei file in S3 da backend nodejs, da usare da bastion.
+	•	Collaborazione con team infrastruttura per validazione DNS, rete e bilanciamento.
+	•	Verifica comportamenti tra ambienti di sviluppo e produzione.
+	•	Revisione logging e tracciamento errori lato PHP e S3.
+	•	Creazione di script per provisioning K8s replicabili.
+	•	Validazione finale ambienti, test E2E di massima con simulazione di processi batch per comunicazione con CFT
+ 
+ 
+🔹 Marzo (8gg)
+ 
+Attività:
+	•	Refactoring configurazioni Manifest per rendere riutilizzabili su più namespace/progetti.
+	•	Contributo alla definizione di naming convention e policy per futura CI/CD condivisa.
+ 
+2.1 Avanzamento globale dei lavori
+Nel periodo di riferimento sono state svolte le seguenti attività principali:
+- Analisi iniziale dell’architettura applicativa e definizione della strategia di deployment su Kubernetes per i progetti Artigianato Liguria e Cassa Liguria.
+- Configurazione degli artefatti di Front-End e Back-End nei vari ambienti, inclusi i moduli develop, configmap, services e routing interno.
+- Realizzazione del modulo di interscambio tramite CFT per la gestione dei flussi informativi con enti terzi.
+- Gestione delle richieste EACB per l’apertura delle porte di comunicazione tra ambienti interni ed esterni.
+- Risoluzione di problematiche relative alla comunicazione tra applicativo PHP e sistema di storage S3 IBM, mediante configurazione mirata del client e delle connessioni.
+ 
+ 
+2.2 Organizzazione del fornitore
+Le attività sono state svolte in coordinamento con il team infrastrutturale e applicativo, con un focus particolare sull’integrazione dei flussi di rilascio all’interno dell’infrastruttura esistente, il supporto agli sviluppatori nella fase di validazione ambienti e la gestione dei collaudi funzionali e tecnici.
+ 
+3.1 Piani d’azione
+Nel periodo in oggetto sono stati predisposti e portati avanti i seguenti piani di azione:
+- Caricamento dati su PostgreSQL da dump parziale in assenza di backup completo: creazione dello schema tramite Doctrine, rimozione manuale delle FK, caricamento massivo dei dati via CLI e ripristino delle FK tramite script PHP.
+- Risoluzione di problematiche bloccanti emerse durante il popolamento iniziale del database e verifica di consistenza post-caricamento.
+3.3 Monitoraggio del deliverable
+Tutti i deliverable previsti per il periodo sono stati completati. In particolare:
+- Configurazione completa e funzionante degli ambienti K8s per Artigianato Liguria e Cassa Liguria.
+- Avvenuta integrazione dell’applicativo con il sistema di storage S3 e caricamento dati su database PostgreSQL con modalità alternativa in assenza di dump coerente.
+- Verifica dei flussi, test di connettività e collaudo funzionale conclusi con esito positivo.

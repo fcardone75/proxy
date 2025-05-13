@@ -1,0 +1,41 @@
+✅ Test DR sul portale in DMZ – Ordinati per priorità
+
+🔴 Priorità Alta – Verifica attivazione corretta del DR
+	1.	Failover funzionante
+	•	Verifica che il portale DR si attivi solo quando il primario è irraggiungibile
+	•	Nessun conflitto DNS, IP o hostname
+	2.	Raggiungibilità esterna del portale DR
+	•	Accesso da Internet tramite URL ufficiale (es. con DNS failover o bilanciamento)
+	•	Certificati SSL validi anche in DR
+	3.	Accesso utenti sul DR
+	•	Login disponibile anche in DR (ad oggi non esiste la connessione a Identity Provider, ma quando sarà attivato siteminder anche questo va verificato)
+	•	Permessi utente replicati correttamente
+	4.	Storage/Database replicati
+	•	File upload e download funzionano usando storage in DR
+	•	Dati presenti e consistenti (verifica anche timestamp, dimensione)
+	5.	Logging e tracciamento
+	•	I log devono essere scritti anche in DR
+
+⸻
+
+🟠 Priorità Media – Verifica coerenza e performance del DR
+	1.	Coerenza funzionale
+	•	Tutte le feature principali del portale devono essere operative (navigazione, form, ricerca, ecc.)
+	2.	Replica DB e stato applicativo
+	•	Verifica che i dati non siano obsoleti (replica in near-real-time?)
+	•	Configurazioni, utenti, ruoli sincronizzati
+	3.	Performance accettabile del DR
+	•	Tempi di risposta simili al primario
+	•	Nessun sovraccarico (es. CPU alta, dischi pieni, RAM saturata)
+	4.	Servizi esterni raggiungibili dal DR
+	•	Lato DMZ: le chiamate a servizi esterni funzionano (PEC, API,  S3 SOC)
+
+⸻
+
+🟢 Priorità Bassa – Verifica mantenimento di sicurezza e compliance
+	1.	Backup in DR disponibili
+	•	Possibilità di ripristino anche nell’ambiente secondario
+	2.	Simulazione “return to normal”
+	•	Verifica che, una volta ripristinato il primario, si possa tornare senza perdita di dati
+
+⸻
